@@ -35,6 +35,9 @@ pipeline {
     }
     stage('Maven Build ') {
       steps {
+        script{
+          stash 'KM'
+        }
         sh 'mvn package'
       }
     }
@@ -42,9 +45,14 @@ pipeline {
       agent any
       steps {
         script {
+          unstash 'KM'
           def image = docker.build("knowledgemeet:latest",'.')
-          image.push()
         }
+      }
+    }
+    stage("Deploy Docker Image"){
+      steps{
+        sh './var/lib/jenkins/docker.sh' env.BRANCH_NAME
       }
     }
   }
