@@ -26,6 +26,7 @@ pipeline {
 
                 }
               sh 'echo Proceeding To Deployment'
+              sh '${WORKSPACE}'
               }
     }
     stage('Maven  Test') {
@@ -50,6 +51,6 @@ pipeline {
         }
       }
     }
-    
+
   }
 }
