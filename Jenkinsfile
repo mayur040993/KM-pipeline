@@ -14,10 +14,20 @@ pipeline {
                   expression { env.BRANCH_NAME == 'master' }
               }
               steps {
-                echo "hello"
-
+              script {
+                try {
+                  timeout(time: 20, unit: 'SECONDS') {
+                    input 'Do you want to proceed to the Deployment?'
+                  }
                 }
-      }
+                catch(err) {
+                        err.printStackTrace()
+                }
+
+              }
+              sh 'echo Proceeding To Deployment'
+              }
+    }
     stage('Maven  Test') {
       steps {
         sh 'mvn test'
