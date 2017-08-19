@@ -9,7 +9,7 @@ pipeline {
     cron('*/2 * * * *')
   }
   stages {
-    stage ('UserInput) {
+    stage ('UserInput') {
               when {
                   expression { env.BRANCH_NAME == 'master' }
               }
