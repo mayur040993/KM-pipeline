@@ -44,7 +44,7 @@ pipeline {
       agent any
       steps {
         script {
-          dir('${WORKSPACE}') {
+          dir(env.WORKSPACE) {
             def image = docker.build("knowledgemeet:latest",'.')
           }
 
