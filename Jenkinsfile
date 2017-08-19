@@ -26,7 +26,7 @@ pipeline {
 
                 }
               sh 'echo Proceeding To Deployment'
-              sh '${WORKSPACE}'
+
               }
     }
     stage('Maven  Test') {
@@ -36,9 +36,7 @@ pipeline {
     }
     stage('Maven Build ') {
       steps {
-        script{
-          stash 'KM'
-        }
+
         sh 'mvn package'
       }
     }
@@ -46,8 +44,10 @@ pipeline {
       agent any
       steps {
         script {
-          unstash 'KM'
-          def image = docker.build("knowledgemeet:latest",'.')
+          dir('${WORKSPACE}') {
+            def image = docker.build("knowledgemeet:latest",'.')
+          }
+
         }
       }
     }
