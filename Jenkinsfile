@@ -11,21 +11,13 @@ pipeline {
   stages {
     stage ('Speak') {
               when {
-                  // Only say hello if a "greeting" is requested
                   expression { env.BRANCH_NAME == 'master' }
               }
               steps {
-                try {
-                  timeout(time: 20, unit: 'SECONDS') {
-                    input 'Do you want to proceed to the Deployment?'
-                  }
+                echo "hello"
+
                 }
-                catch(err) {
-                        err.printStackTrace()
-                }
-                sh 'echo Proceeding To Deployment'
-              }
-    }
+      }
     stage('Maven  Test') {
       steps {
         sh 'mvn test'
