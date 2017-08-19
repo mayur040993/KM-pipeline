@@ -39,9 +39,11 @@ pipeline {
       }
     }
     stage("build_push_image") {
-      script {
-        def image = docker.build("knowledgemeet:latest",'.')
-        image.push()
+      step {
+        script {
+          def image = docker.build("knowledgemeet:latest",'.')
+          image.push()
+        }
       }
     }
   }
