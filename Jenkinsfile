@@ -9,22 +9,22 @@ pipeline {
     cron('*/2 * * * *')
   }
   stages {
-    stage ('Speak') {
+    stage ('UserInput) {
               when {
                   expression { env.BRANCH_NAME == 'master' }
               }
               steps {
-              script {
-                try {
-                  timeout(time: 20, unit: 'SECONDS') {
-                    input 'Do you want to proceed to the Deployment?'
+                script {
+                  try {
+                    timeout(time: 20, unit: 'SECONDS') {
+                      input 'Do you want to proceed to the Deployment?'
+                    }
                   }
-                }
-                catch(err) {
-                        err.printStackTrace()
-                }
+                  catch(err) {
+                          err.printStackTrace()
+                  }
 
-              }
+                }
               sh 'echo Proceeding To Deployment'
               }
     }
@@ -36,6 +36,12 @@ pipeline {
     stage('Maven Build ') {
       steps {
         sh 'mvn package'
+      }
+    }
+    stage("build_push_image") {
+      script {
+        def image = docker.build("knowledgemeet:latest",'.')
+        image.push()
       }
     }
   }
