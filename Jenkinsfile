@@ -50,10 +50,6 @@ pipeline {
         }
       }
     }
-    stage("Deploy Docker Image"){
-      steps{
-        sh './var/lib/jenkins/docker.sh' env.BRANCH_NAME
-      }
-    }
+    
   }
 }
