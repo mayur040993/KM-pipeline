@@ -1,10 +1,5 @@
 pipeline {
-  agent {
-    docker {
-      image 'maven:3.5-jdk-8'
-    }
-
-  }
+  agent any
   triggers {
     cron('*/2 * * * *')
   }
@@ -30,18 +25,30 @@ pipeline {
               }
     }
     stage('Maven  Test') {
+    agent {
+      docker {
+        image 'maven:3.5-jdk-8'
+      }
+
+    }
       steps {
         sh 'mvn test'
       }
     }
     stage('Maven Build ') {
+    agent {
+      docker {
+        image 'maven:3.5-jdk-8'
+      }
+
+    }
       steps {
 
         sh 'mvn package'
       }
     }
     stage("build_push_image") {
-      agent any
+    
       steps {
         script {
           dir(env.WORKSPACE) {
