@@ -39,6 +39,7 @@ pipeline {
       }
     }
     stage("build_push_image") {
+      agent any
       steps {
         script {
           def image = docker.build("knowledgemeet:latest",'.')
